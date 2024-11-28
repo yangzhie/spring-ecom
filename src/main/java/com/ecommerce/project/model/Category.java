@@ -2,6 +2,7 @@ package com.ecommerce.project.model;
 
 // Model stores data that is retrieved from the database and displayed to the user
 public class Category {
+
     private Long categoryId;
     private String categoryName;
 
@@ -25,4 +26,5 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+    
 }
