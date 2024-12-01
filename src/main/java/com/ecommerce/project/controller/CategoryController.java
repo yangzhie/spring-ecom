@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ecommerce.project.model.Category;
@@ -43,6 +44,16 @@ public class CategoryController {
         try {
             String status = categoryService.deleteCategory(categoryId);
             return new ResponseEntity<>(status, HttpStatus.OK);
+        } catch (ResponseStatusException ex) {
+            return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
+        }
+    }
+
+    @PutMapping("/api/admin/categories/{categoryId}")
+    public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable Long categoryId) {
+        try {
+            categoryService.updateCategory(category, categoryId);
+            return new ResponseEntity<>("Category with id: " + categoryId + " updated successfully", HttpStatus.OK);
         } catch (ResponseStatusException ex) {
             return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
         }

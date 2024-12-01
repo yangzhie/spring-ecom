@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ecommerce.project.model.Category;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.List;
 
 @Service
@@ -38,6 +39,27 @@ public class CategoryServiceImpl implements CategoryService {
         categories.remove(category);
 
         return "Category with categoryId: " + categoryId + " deleted successfully";
+    }
+
+    @Override
+    public Category updateCategory(Category category, Long categoryId) {
+        // Getting category by ID
+        Optional<Category> optionalCategory = categories.stream()
+                .filter(c -> c.getCategoryId().equals(categoryId))
+                .findFirst();
+                
+        // If category is found
+        if (optionalCategory.isPresent()) {
+            // Retrieves the value contained within an Optional object
+            Category existingCategory = optionalCategory.get();
+
+            // Updates the category name
+            existingCategory.setCategoryName(category.getCategoryName());
+
+            return existingCategory;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+        }
     }
 
 }
