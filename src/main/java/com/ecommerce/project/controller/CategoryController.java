@@ -15,6 +15,7 @@ public class CategoryController {
 
     private CategoryService categoryService;
 
+    // Constructor handles incoming traffic from CategoryService
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
